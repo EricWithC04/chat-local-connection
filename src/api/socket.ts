@@ -1,11 +1,13 @@
-import { Server } from 'socket.io';
+import { NextApiRequest } from 'next';
+import { Server as SocketIOServer } from 'socket.io';
+import { NextApiResponseServerIO } from '@/types/next';
 
-let peers = []; // Lista de peers conectados en la red LAN
+// let peers = []; // Lista de peers conectados en la red LAN
 
-export default function handler(req: any, res: any) {
+export default function handler(req: NextApiRequest, res: NextApiResponseServerIO) {
     if (!res.socket.server.io) {
         console.log('Inicializando Socket.IO...');
-        const io = new Server(res.socket.server);
+        const io = new SocketIOServer(res.socket.server);
 
         // Configurar los eventos de Socket.IO
         io.on('connection', (socket) => {
